@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_shared_service_items",
+  "info": {
+    "displayName": "service_item",
+    "icon": "briefcase"
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "richtext"
+    }
+  }
+}
