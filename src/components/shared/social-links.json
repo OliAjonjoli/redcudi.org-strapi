@@ -10,6 +10,10 @@
     "twitter": { "type": "string" },
     "tiktok": { "type": "string" },
     "linkedin": { "type": "string" },
-    "website": { "type": "string" }
+    "website": { "type": "string" },
+    "youtube": { "type": "string" },
+    "bluesky": { "type": "string" },
+    "threads": { "type": "string" },
+    "email": { "type": "email" }
   }
 }

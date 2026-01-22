@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "professions",
+  "collectionName": "specializations",
   "info": {
-    "singularName": "profession",
-    "pluralName": "professions",
-    "displayName": "Profession"
+    "singularName": "specialization",
+    "pluralName": "specializations",
+    "displayName": "Specialization"
   },
   "options": {
     "draftAndPublish": true
@@ -33,7 +33,7 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::professional.professional",
-      "inversedBy": "professions"
+      "inversedBy": "specializations"
     }
   }
 }

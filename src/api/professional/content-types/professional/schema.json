@@ -19,6 +19,16 @@
       "type": "uid",
       "targetField": "name"
     },
+    "entity_type": {
+      "type": "enumeration",
+      "enum": [
+        "individual_health",
+        "individual_other",
+        "organization"
+      ],
+      "required": true,
+      "default": "individual_health"
+    },
     "pronouns": {
       "type": "component",
       "component": "shared.pronoun",
@@ -82,10 +92,17 @@
       "type": "boolean",
       "default": false
     },
-    "profession": {
+    "specializations": {
       "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::profession.profession"
+      "relation": "manyToMany",
+      "target": "api::specialization.specialization",
+      "inversedBy": "professionals"
+    },
+    "professions": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::profession.profession",
+      "inversedBy": "professionals"
     }
   }
 }

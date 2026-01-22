@@ -1,9 +1,26 @@
 {
   "collectionName": "components_shared_value_items",
   "info": {
-    "displayName": "value-item"
+    "displayName": "value-item",
+    "icon": "heart"
   },
-  "options": {},
-  "attributes": {},
-  "config": {}
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "icon": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "order": {
+      "type": "integer"
+    }
+  }
 }
