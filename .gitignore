@@ -122,6 +122,8 @@ coverage
 ############################
 
 .env
+.env.*
+!.env.example
 license.txt
 exports
 .strapi
@@ -129,3 +131,12 @@ dist
 build
 .strapi-updater.json
 .strapi-cloud.json
+
+############################
+# Deployment
+############################
+
+.prod/
+.dev/
+docker-compose*.yml
+!docker-compose.example.yml
