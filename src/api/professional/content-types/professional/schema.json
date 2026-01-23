@@ -4,7 +4,8 @@
   "info": {
     "singularName": "professional",
     "pluralName": "professionals",
-    "displayName": "Professional"
+    "displayName": "Professional",
+    "description": "Professional model"
   },
   "options": {
     "draftAndPublish": true
@@ -96,13 +97,13 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::specialization.specialization",
-      "inversedBy": "professionals"
+      "mappedBy": "professionals"
     },
     "professions": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::profession.profession",
-      "inversedBy": "professionals"
+      "mappedBy": "professionals"
     }
   }
 }

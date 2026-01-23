@@ -4,7 +4,8 @@
   "info": {
     "singularName": "specialization",
     "pluralName": "specializations",
-    "displayName": "Specialization"
+    "displayName": "Specialization",
+    "description": "Specialization model"
   },
   "options": {
     "draftAndPublish": true
@@ -33,7 +34,7 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::professional.professional",
-      "inversedBy": "specializations"
+      "mappedBy": "specializations"
     }
   }
 }
