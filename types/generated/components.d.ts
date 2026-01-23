@@ -33,12 +33,16 @@ export interface SharedSocialLinks extends Struct.ComponentSchema {
     icon: 'link';
   };
   attributes: {
+    bluesky: Schema.Attribute.String;
+    email: Schema.Attribute.Email;
     facebook: Schema.Attribute.String;
     instagram: Schema.Attribute.String;
     linkedin: Schema.Attribute.String;
+    threads: Schema.Attribute.String;
     tiktok: Schema.Attribute.String;
     twitter: Schema.Attribute.String;
     website: Schema.Attribute.String;
+    youtube: Schema.Attribute.String;
   };
 }
 
@@ -46,16 +50,28 @@ export interface SharedTimelineItem extends Struct.ComponentSchema {
   collectionName: 'components_shared_timeline_items';
   info: {
     displayName: 'timeline-item';
+    icon: 'calendar';
   };
-  attributes: {};
+  attributes: {
+    date: Schema.Attribute.Date & Schema.Attribute.Required;
+    description: Schema.Attribute.RichText;
+    order: Schema.Attribute.Integer;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
 }
 
 export interface SharedValueItem extends Struct.ComponentSchema {
   collectionName: 'components_shared_value_items';
   info: {
     displayName: 'value-item';
+    icon: 'heart';
   };
-  attributes: {};
+  attributes: {
+    description: Schema.Attribute.RichText;
+    icon: Schema.Attribute.Media<'images'>;
+    order: Schema.Attribute.Integer;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
 }
 
 declare module '@strapi/strapi' {

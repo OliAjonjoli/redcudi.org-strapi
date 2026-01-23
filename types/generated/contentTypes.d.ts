@@ -467,94 +467,6 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiHealthProfessionalHealthProfessional
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'health_professionals';
-  info: {
-    displayName: 'Health Professional';
-    pluralName: 'health-professionals';
-    singularName: 'health-professional';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    bio: Schema.Attribute.RichText;
-    contact_email: Schema.Attribute.Email;
-    contact_phone: Schema.Attribute.String;
-    contact_whatsapp: Schema.Attribute.String;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    first_name: Schema.Attribute.String & Schema.Attribute.Required;
-    last_name: Schema.Attribute.String & Schema.Attribute.Required;
-    lgbtq_friendly_statement: Schema.Attribute.RichText;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::health-professional.health-professional'
-    > &
-      Schema.Attribute.Private;
-    location_city: Schema.Attribute.String;
-    location_state: Schema.Attribute.String;
-    photo: Schema.Attribute.Media<'images'>;
-    pricing_model: Schema.Attribute.Enumeration<
-      ['free', 'low_cost', 'sliding_scale', 'standard']
-    >;
-    pronouns: Schema.Attribute.Component<'shared.pronoun', true>;
-    publishedAt: Schema.Attribute.DateTime;
-    services: Schema.Attribute.Component<'shared.service-item', true>;
-    slug: Schema.Attribute.UID;
-    social_media: Schema.Attribute.Component<'shared.social-links', false>;
-    specializations: Schema.Attribute.Relation<
-      'manyToMany',
-      'api::health-specialization.health-specialization'
-    >;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    verified: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    website: Schema.Attribute.String;
-  };
-}
-
-export interface ApiHealthSpecializationHealthSpecialization
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'health_specializations';
-  info: {
-    displayName: 'Health Specialization';
-    pluralName: 'health-specializations';
-    singularName: 'health-specialization';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    description: Schema.Attribute.RichText;
-    health_professionals: Schema.Attribute.Relation<
-      'manyToMany',
-      'api::health-professional.health-professional'
-    >;
-    icon: Schema.Attribute.Media<'images'>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::health-specialization.health-specialization'
-    > &
-      Schema.Attribute.Private;
-    name: Schema.Attribute.String & Schema.Attribute.Required;
-    publishedAt: Schema.Attribute.DateTime;
-    slug: Schema.Attribute.UID<'name'>;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiProfessionProfession extends Struct.CollectionTypeSchema {
   collectionName: 'professions';
   info: {
@@ -570,7 +482,7 @@ export interface ApiProfessionProfession extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     description: Schema.Attribute.RichText;
-    icon: Schema.Attribute.Media;
+    icon: Schema.Attribute.Media<'images'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -579,7 +491,7 @@ export interface ApiProfessionProfession extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     name: Schema.Attribute.String & Schema.Attribute.Required;
     professionals: Schema.Attribute.Relation<
-      'oneToMany',
+      'manyToMany',
       'api::professional.professional'
     >;
     publishedAt: Schema.Attribute.DateTime;
@@ -609,6 +521,11 @@ export interface ApiProfessionalProfessional
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    entity_type: Schema.Attribute.Enumeration<
+      ['individual_health', 'individual_other', 'organization']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'individual_health'>;
     featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     lgbtq_friendly_statement: Schema.Attribute.RichText;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -624,8 +541,8 @@ export interface ApiProfessionalProfessional
     pricing_model: Schema.Attribute.Enumeration<
       ['free', 'low_cost', 'sliding_scale', 'standard']
     >;
-    profession: Schema.Attribute.Relation<
-      'manyToOne',
+    professions: Schema.Attribute.Relation<
+      'manyToMany',
       'api::profession.profession'
     >;
     pronouns: Schema.Attribute.Component<'shared.pronoun', true>;
@@ -633,11 +550,51 @@ export interface ApiProfessionalProfessional
     services: Schema.Attribute.Component<'shared.service-item', true>;
     slug: Schema.Attribute.UID<'name'>;
     social_media: Schema.Attribute.Component<'shared.social-links', false>;
+    specializations: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::specialization.specialization'
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     verified: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     website: Schema.Attribute.String;
+  };
+}
+
+export interface ApiSpecializationSpecialization
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'specializations';
+  info: {
+    displayName: 'Specialization';
+    pluralName: 'specializations';
+    singularName: 'specialization';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.RichText;
+    icon: Schema.Attribute.Media<'images'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::specialization.specialization'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    professionals: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::professional.professional'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'name'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
   };
 }
 
@@ -1187,10 +1144,9 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
-      'api::health-professional.health-professional': ApiHealthProfessionalHealthProfessional;
-      'api::health-specialization.health-specialization': ApiHealthSpecializationHealthSpecialization;
       'api::profession.profession': ApiProfessionProfession;
       'api::professional.professional': ApiProfessionalProfessional;
+      'api::specialization.specialization': ApiSpecializationSpecialization;
       'api::staff-member.staff-member': ApiStaffMemberStaffMember;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
