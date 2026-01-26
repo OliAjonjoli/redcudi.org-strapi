@@ -467,6 +467,56 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiBusinessBusiness extends Struct.CollectionTypeSchema {
+  collectionName: 'businesses';
+  info: {
+    description: 'Business, clinic, or organization model';
+    displayName: 'Business';
+    pluralName: 'businesses';
+    singularName: 'business';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    bio: Schema.Attribute.RichText;
+    contact_email: Schema.Attribute.Email;
+    contact_phone: Schema.Attribute.String;
+    contact_whatsapp: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    lgbtq_friendly_statement: Schema.Attribute.RichText;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::business.business'
+    > &
+      Schema.Attribute.Private;
+    location_city: Schema.Attribute.String;
+    location_state: Schema.Attribute.String;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    photo: Schema.Attribute.Media<'images'>;
+    pricing_model: Schema.Attribute.Enumeration<
+      ['free', 'low_cost', 'sliding_scale', 'standard']
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    services: Schema.Attribute.Component<'shared.service-item', true>;
+    slug: Schema.Attribute.UID;
+    social_media: Schema.Attribute.Component<'shared.social-links', false>;
+    specializations: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::specialization.specialization'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    verified: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    website: Schema.Attribute.String;
+  };
+}
+
 export interface ApiProfessionProfession extends Struct.CollectionTypeSchema {
   collectionName: 'professions';
   info: {
@@ -495,7 +545,7 @@ export interface ApiProfessionProfession extends Struct.CollectionTypeSchema {
       'api::professional.professional'
     >;
     publishedAt: Schema.Attribute.DateTime;
-    slug: Schema.Attribute.UID<'name'>;
+    slug: Schema.Attribute.UID;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -506,6 +556,7 @@ export interface ApiProfessionalProfessional
   extends Struct.CollectionTypeSchema {
   collectionName: 'professionals';
   info: {
+    description: 'Professional model';
     displayName: 'Professional';
     pluralName: 'professionals';
     singularName: 'professional';
@@ -522,11 +573,13 @@ export interface ApiProfessionalProfessional
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     entity_type: Schema.Attribute.Enumeration<
-      ['individual_health', 'individual_other', 'organization']
+      ['individual_health', 'individual_other']
     > &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'individual_health'>;
     featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    firstName: Schema.Attribute.String & Schema.Attribute.Required;
+    lastName: Schema.Attribute.String & Schema.Attribute.Required;
     lgbtq_friendly_statement: Schema.Attribute.RichText;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -536,7 +589,6 @@ export interface ApiProfessionalProfessional
       Schema.Attribute.Private;
     location_city: Schema.Attribute.String;
     location_state: Schema.Attribute.String;
-    name: Schema.Attribute.String & Schema.Attribute.Required;
     photo: Schema.Attribute.Media<'images'>;
     pricing_model: Schema.Attribute.Enumeration<
       ['free', 'low_cost', 'sliding_scale', 'standard']
@@ -548,11 +600,14 @@ export interface ApiProfessionalProfessional
     pronouns: Schema.Attribute.Component<'shared.pronoun', true>;
     publishedAt: Schema.Attribute.DateTime;
     services: Schema.Attribute.Component<'shared.service-item', true>;
-    slug: Schema.Attribute.UID<'name'>;
+    slug: Schema.Attribute.UID;
     social_media: Schema.Attribute.Component<'shared.social-links', false>;
     specializations: Schema.Attribute.Relation<
       'manyToMany',
       'api::specialization.specialization'
+    >;
+    title: Schema.Attribute.Enumeration<
+      ['Dr.', 'Ing.', 'Mtro.', 'C.P.', 'Lic.', 'Psic.']
     >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -566,6 +621,7 @@ export interface ApiSpecializationSpecialization
   extends Struct.CollectionTypeSchema {
   collectionName: 'specializations';
   info: {
+    description: 'Specialization model';
     displayName: 'Specialization';
     pluralName: 'specializations';
     singularName: 'specialization';
@@ -574,6 +630,10 @@ export interface ApiSpecializationSpecialization
     draftAndPublish: true;
   };
   attributes: {
+    businesses: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::business.business'
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -591,7 +651,7 @@ export interface ApiSpecializationSpecialization
       'api::professional.professional'
     >;
     publishedAt: Schema.Attribute.DateTime;
-    slug: Schema.Attribute.UID<'name'>;
+    slug: Schema.Attribute.UID;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -613,19 +673,20 @@ export interface ApiStaffMemberStaffMember extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    firstName: Schema.Attribute.String & Schema.Attribute.Required;
+    lastName: Schema.Attribute.String & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::staff-member.staff-member'
     > &
       Schema.Attribute.Private;
-    name: Schema.Attribute.String;
     order: Schema.Attribute.Integer;
     photo: Schema.Attribute.Media<'images'>;
     pronouns: Schema.Attribute.Component<'shared.pronoun', true>;
     publishedAt: Schema.Attribute.DateTime;
     role: Schema.Attribute.String;
-    slug: Schema.Attribute.UID<'name'>;
+    slug: Schema.Attribute.UID;
     social_media: Schema.Attribute.Component<'shared.social-links', false>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1144,6 +1205,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::business.business': ApiBusinessBusiness;
       'api::profession.profession': ApiProfessionProfession;
       'api::professional.professional': ApiProfessionalProfessional;
       'api::specialization.specialization': ApiSpecializationSpecialization;

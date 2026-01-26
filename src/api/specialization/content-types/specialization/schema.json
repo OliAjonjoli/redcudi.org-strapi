@@ -17,8 +17,7 @@
       "required": true
     },
     "slug": {
-      "type": "uid",
-      "targetField": "name"
+      "type": "uid"
     },
     "description": {
       "type": "richtext"
@@ -34,6 +33,12 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::professional.professional",
+      "inversedBy": "specializations"
+    },
+    "businesses": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::business.business",
       "mappedBy": "specializations"
     }
   }

@@ -11,12 +11,16 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "name": {
-      "type": "string"
+    "firstName": {
+      "type": "string",
+      "required": true
+    },
+    "lastName": {
+      "type": "string",
+      "required": true
     },
     "slug": {
-      "type": "uid",
-      "targetField": "name"
+      "type": "uid"
     },
     "role": {
       "type": "string"

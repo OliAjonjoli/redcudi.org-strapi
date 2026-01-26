@@ -8,9 +8,9 @@
     "value": {
       "type": "enumeration",
       "enum": [
-        "ella (femenino)",
-        "él (masculino)",
-        "elle/elles/ellxs (neutro)"
+        "ella",
+        "él",
+        "elle/elles/ellxs"
       ]
     },
     "custom_value": {

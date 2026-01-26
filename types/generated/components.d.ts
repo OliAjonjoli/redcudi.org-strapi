@@ -9,7 +9,7 @@ export interface SharedPronoun extends Struct.ComponentSchema {
   attributes: {
     custom_value: Schema.Attribute.String;
     value: Schema.Attribute.Enumeration<
-      ['ella (femenino)', '\u00E9l (masculino)', 'elle/elles/ellxs (neutro)']
+      ['ella', '\u00E9l', 'elle/elles/ellxs']
     >;
   };
 }
