@@ -18,45 +18,46 @@
   "attributes": {
     "firstName": {
       "type": "string",
-      "required": true,
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
-      }
+      },
+      "required": true
     },
     "lastName": {
       "type": "string",
-      "required": true,
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
-      }
+      },
+      "required": true
     },
     "title": {
       "type": "enumeration",
       "enum": [
         "Dr.",
+        "Dra.",
         "Ing.",
         "Mtro.",
+        "Mtra.",
         "C.P.",
         "Lic.",
         "Psic."
-      ],
-      "description": "Professional title"
+      ]
     },
     "slug": {
       "type": "uid"
     },
     "entity_type": {
       "type": "enumeration",
+      "required": true,
+      "default": "individual_health",
       "enum": [
         "individual_health",
         "individual_other"
-      ],
-      "required": true,
-      "default": "individual_health"
+      ]
     },
     "pronouns": {
       "type": "component",

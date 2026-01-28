@@ -668,7 +668,7 @@ export interface ApiProfessionalProfessional
       'api::specialization.specialization'
     >;
     title: Schema.Attribute.Enumeration<
-      ['Dr.', 'Ing.', 'Mtro.', 'C.P.', 'Lic.', 'Psic.']
+      ['Dr.', 'Dra.', 'Ing.', 'Mtro.', 'Mtra.', 'C.P.', 'Lic.', 'Psic.']
     >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
