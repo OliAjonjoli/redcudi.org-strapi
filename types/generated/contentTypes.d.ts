@@ -478,8 +478,18 @@ export interface ApiBusinessBusiness extends Struct.CollectionTypeSchema {
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    bio: Schema.Attribute.RichText;
+    bio: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     contact_email: Schema.Attribute.Email;
     contact_phone: Schema.Attribute.String;
     contact_whatsapp: Schema.Attribute.String;
@@ -487,16 +497,26 @@ export interface ApiBusinessBusiness extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    lgbtq_friendly_statement: Schema.Attribute.RichText;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    lgbtq_friendly_statement: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::business.business'
-    > &
-      Schema.Attribute.Private;
+    >;
     location_city: Schema.Attribute.String;
     location_state: Schema.Attribute.String;
-    name: Schema.Attribute.String & Schema.Attribute.Required;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     photo: Schema.Attribute.Media<'images'>;
     pricing_model: Schema.Attribute.Enumeration<
       ['free', 'low_cost', 'sliding_scale', 'standard']
@@ -527,19 +547,34 @@ export interface ApiProfessionProfession extends Struct.CollectionTypeSchema {
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.RichText;
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     icon: Schema.Attribute.Media<'images'>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::profession.profession'
-    > &
-      Schema.Attribute.Private;
-    name: Schema.Attribute.String & Schema.Attribute.Required;
+    >;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     professionals: Schema.Attribute.Relation<
       'manyToMany',
       'api::professional.professional'
@@ -564,8 +599,18 @@ export interface ApiProfessionalProfessional
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    bio: Schema.Attribute.RichText;
+    bio: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     contact_email: Schema.Attribute.Email;
     contact_phone: Schema.Attribute.String;
     contact_whatsapp: Schema.Attribute.String;
@@ -578,15 +623,31 @@ export interface ApiProfessionalProfessional
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'individual_health'>;
     featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    firstName: Schema.Attribute.String & Schema.Attribute.Required;
-    lastName: Schema.Attribute.String & Schema.Attribute.Required;
-    lgbtq_friendly_statement: Schema.Attribute.RichText;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    firstName: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    lastName: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    lgbtq_friendly_statement: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::professional.professional'
-    > &
-      Schema.Attribute.Private;
+    >;
     location_city: Schema.Attribute.String;
     location_state: Schema.Attribute.String;
     photo: Schema.Attribute.Media<'images'>;
@@ -629,6 +690,11 @@ export interface ApiSpecializationSpecialization
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     businesses: Schema.Attribute.Relation<
       'manyToMany',
@@ -637,15 +703,25 @@ export interface ApiSpecializationSpecialization
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.RichText;
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     icon: Schema.Attribute.Media<'images'>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::specialization.specialization'
-    > &
-      Schema.Attribute.Private;
-    name: Schema.Attribute.String & Schema.Attribute.Required;
+    >;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     professionals: Schema.Attribute.Relation<
       'manyToMany',
       'api::professional.professional'
