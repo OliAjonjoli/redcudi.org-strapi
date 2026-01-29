@@ -537,6 +537,34 @@ export interface ApiBusinessBusiness extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCityCity extends Struct.CollectionTypeSchema {
+  collectionName: 'cities';
+  info: {
+    description: 'Mexican cities from INEGI';
+    displayName: 'City';
+    pluralName: 'cities';
+    singularName: 'city';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    code: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::city.city'> &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    state: Schema.Attribute.Relation<'manyToOne', 'api::state.state'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiProfessionProfession extends Struct.CollectionTypeSchema {
   collectionName: 'professions';
   info: {
@@ -648,8 +676,8 @@ export interface ApiProfessionalProfessional
       'oneToMany',
       'api::professional.professional'
     >;
-    location_city: Schema.Attribute.String;
-    location_state: Schema.Attribute.String;
+    location_city: Schema.Attribute.Relation<'manyToOne', 'api::city.city'>;
+    location_state: Schema.Attribute.Relation<'manyToOne', 'api::state.state'>;
     photo: Schema.Attribute.Media<'images'>;
     pricing_model: Schema.Attribute.Enumeration<
       ['free', 'low_cost', 'sliding_scale', 'standard']
@@ -764,6 +792,36 @@ export interface ApiStaffMemberStaffMember extends Struct.CollectionTypeSchema {
     role: Schema.Attribute.String;
     slug: Schema.Attribute.UID;
     social_media: Schema.Attribute.Component<'shared.social-links', false>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiStateState extends Struct.CollectionTypeSchema {
+  collectionName: 'states';
+  info: {
+    description: 'Mexican states from INEGI';
+    displayName: 'State';
+    pluralName: 'states';
+    singularName: 'state';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    cities: Schema.Attribute.Relation<'oneToMany', 'api::city.city'>;
+    code: Schema.Attribute.String & Schema.Attribute.Unique;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::state.state'> &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1282,10 +1340,12 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::business.business': ApiBusinessBusiness;
+      'api::city.city': ApiCityCity;
       'api::profession.profession': ApiProfessionProfession;
       'api::professional.professional': ApiProfessionalProfessional;
       'api::specialization.specialization': ApiSpecializationSpecialization;
       'api::staff-member.staff-member': ApiStaffMemberStaffMember;
+      'api::state.state': ApiStateState;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

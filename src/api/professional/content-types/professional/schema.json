@@ -92,11 +92,15 @@
       "component": "shared.service-item",
       "repeatable": true
     },
-    "location_city": {
-      "type": "string"
-    },
     "location_state": {
-      "type": "string"
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::state.state"
+    },
+    "location_city": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::city.city"
     },
     "contact_email": {
       "type": "email"

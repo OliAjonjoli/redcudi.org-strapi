@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cities",
+  "info": {
+    "singularName": "city",
+    "pluralName": "cities",
+    "displayName": "City",
+    "description": "Mexican cities from INEGI"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "code": {
+      "type": "string"
+    },
+    "state": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::state.state",
+      "inversedBy": "cities"
+    }
+  }
+}
